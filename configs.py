@@ -32,12 +32,7 @@ Send Me any Media or File. I can Work In Channel too. Add Me to Channel with Edi
 │
 ╰──────[ 😎 ]───────────⍟
 """
-  ABOUT_DEV_TEXT = f"""
-🧑🏻‍💻 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿: [VJ](https://telegram.me/aka_oreo)
- 
- I am Super noob Please Support My Hard Work.
-
-[Donate Me](https://t.me/KingVj01)
+  ABOUT_DEV_TEXT = f""" hi
 """
   HOME_TEXT = """
 Hello, [{}](tg://user?id={})\n\n **Hᴇʟʟᴏ Stranger🦋 ɪ ᴀᴍ ᴀ ᴘᴏᴡᴇʀꜰᴜʟ Fɪʟᴇ ᴛᴏ ʟɪɴᴋ + ꜰɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ **⚡️
