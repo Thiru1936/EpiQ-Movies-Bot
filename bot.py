@@ -443,7 +443,17 @@ async def button(bot: Client, cmd: CallbackQuery):
                                    [InlineKeyboardButton("Close Message", callback_data="closeMessage")]
                                ]))
 
-    
+    elif "addToBatchFalse" in cb_data:
+        await save_media_in_channel(bot, editable=cmd.message, message=cmd.message.reply_to_message)
+
+    elif "getBatchLink" in cb_data:
+        message_ids = MediaList.get(f"{str(cmd.from_user.id)}", None)
+        if message_ids is None:
+            await cmd.answer("Batch List Empty!", show_alert=True)
+            return
+        await cmd.message.edit("Please wait, generating batch link ...")
+        await save_batch_media_in_channel(bot=bot, editable=cmd.message, message_ids=message_ids)
+        MediaList[f"{str(cmd.from_user.id)}"] = []
 
     elif "closeMessage" in cb_data:
         await cmd.message.delete(True)
