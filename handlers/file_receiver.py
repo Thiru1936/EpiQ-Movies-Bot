@@ -21,7 +21,7 @@ async def receive_files(client, message):
                 is_batch = False
         batch_files[msg_id].append(message)
     handler = client.add_handler(MessageHandler(temp, filters=create(event_filter) & chat(Config.BOT_OWNER)), group=-1)
-    while is_batch[user_id]:
+    while is_batch:
         await sleep(0.5)
     client.remove_handler(*handler)
     try:
