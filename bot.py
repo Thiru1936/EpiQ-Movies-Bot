@@ -102,8 +102,8 @@ async def start(bot: Client, cmd: Message):
                 ]
             )
         )
-    elif cmd.cmd[1].startswith('batch'):
-        _, files_id = cmd.split('-', 1)
+    elif cmd.command[1].startswith('batch'):
+        _, files_id = cmd.command[1].split('-', 1)
         start_msg, end_msg = b64_to_str(files_id).split('-', 1)
         for i in range(int(start_msg), int(end_msg)+1):
             await copy_message_to_user(bot, chat_id=cmd.from_user.id, message_id=i)
