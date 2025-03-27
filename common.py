@@ -1,2 +1,2 @@
 batch_files = {}
-is_batch = True
+is_batch = False 
