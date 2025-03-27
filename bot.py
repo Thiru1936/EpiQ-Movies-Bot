@@ -3,6 +3,7 @@
 import os
 import asyncio
 import traceback
+from functools import partial, wraps
 from binascii import (
     Error
 )
@@ -34,11 +35,22 @@ from handlers.force_sub_handler import (
 )
 from handlers.broadcast_handlers import main_broadcast_handler
 from handlers.save_media import (get_short)
+from handlers.file_receiver import receive_files
 
 MediaList = {}
+batch = False
+batch_files = {}
 
 bot_loop = asyncio.new_event_loop()
 asyncio.set_event_loop(bot_loop)
+
+def new_task(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        task = bot_loop.create_task(func(*args, **kwargs))
+        return task
+
+    return wrapper
 
 Bot = Client(
     name=Config.BOT_USERNAME,
@@ -53,6 +65,12 @@ Bot = Client(
 async def _(bot: Client, cmd: Message):
     await handle_user_status(bot, cmd)
 
+async def copy_message_to_user(client, chat_id, message_id):
+    try:
+        await client.copy_message(chat_id=chat_id, from_chat_id=Config.DB_CHANNEL, message_id=message_id)
+    except FloodWait as sl:
+        await asyncio.sleep(sl.value)
+        return await copy_message_to_user(client, chat_id, message_id)
 
 @Bot.on_message(filters.command("start") & filters.private)
 async def start(bot: Client, cmd: Message):
@@ -84,6 +102,13 @@ async def start(bot: Client, cmd: Message):
                 ]
             )
         )
+    elif cmd.cmd[1].startswith('batch'):
+        _, files_id = cmd.split('-', 1)
+        start_msg, end_msg = b64_to_str(files_id).split('-', 1)
+        for i in range(int(start_msg), int(end_msg)+1):
+            await copy_message_to_user(bot, chat_id=cmd.from_user.id, message_id=i)
+        return
+
     else:
         try:
             try:
@@ -203,7 +228,6 @@ async def main(bot: Client, message: Message):
 async def broadcast_handler_open(_, m: Message):
     await main_broadcast_handler(m, db)
 
-
 @Bot.on_message(filters.private & filters.command("status") & filters.user(Config.BOT_OWNER))
 async def sts(_, m: Message):
     total_users = await db.total_users_count()
@@ -211,6 +235,29 @@ async def sts(_, m: Message):
         text=f"**Total Users in DB:** `{total_users}`",
         quote=True
     )
+
+async def copy_message(msg):
+    try:
+        return await msg.copy(Config.LOG_CHANNEL)
+    except FloodWait as sl:
+        await asyncio.sleep(sl.value)
+        return await copy_message(msg)
+
+@Bot.on_message(filters.command("batch") & filters.private & filters.user(Config.BOT_OWNER))
+async def batch_files(client, m: Message):
+    messages = await receive_files(client, m)
+    start_msg, end_msg, temp = None
+    is_start_msg = True
+    for message in messages:
+        temp = await copy_message(message)
+        if is_start_msg:
+            start_msg = temp.id
+            is_start_msg = False
+    end_msg = temp.id
+    files_id = f"batch-{str_to_b64({start_msg}-{end_msg})}"
+    share_link = f"https://t.me/{Config.BOT_USERNAME}?start=batch_{files_id}"
+    await m.reply(f"Here is ur link : {share_link}")
+
 
 
 @Bot.on_message(filters.private & filters.command("ban_user") & filters.user(Config.BOT_OWNER))
