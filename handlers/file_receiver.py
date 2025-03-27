@@ -13,6 +13,7 @@ async def receive_files(client, message):
     msg_id = message.id
     batch_files[msg_id] = []
     async def event_filter(_, __, message):
+        print(message.text)
         if message and message.command:
             print(message.command)
             if message.command[0].startswith('cancel'):
