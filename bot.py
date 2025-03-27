@@ -244,6 +244,7 @@ async def copy_message(msg):
         return await copy_message(msg)
 
 @Bot.on_message(filters.command("batch") & filters.private & filters.user(Config.BOT_OWNER))
+@new_task
 async def batch_files(client, m: Message):
     await m.reply("Now Start send files\n\nuse /cancel or /done")
     messages = await receive_files(client, m)
