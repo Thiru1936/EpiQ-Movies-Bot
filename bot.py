@@ -517,5 +517,5 @@ async def button(bot: Client, cmd: CallbackQuery):
     except QueryIdInvalid:
         pass
 
-
+print("Bot Started !!")
 Bot.run()
