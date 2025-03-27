@@ -37,6 +37,9 @@ from handlers.save_media import (get_short)
 
 MediaList = {}
 
+bot_loop = asyncio.new_event_loop()
+asyncio.set_event_loop(bot_loop)
+
 Bot = Client(
     name=Config.BOT_USERNAME,
     in_memory=True,
