@@ -13,11 +13,12 @@ async def receive_files(client, message):
     msg_id = message.id
     batch_files[msg_id] = []
     async def event_filter(_, __, message):
-        if message and message.text:
-            if message.text.startswith('/cancel'):
+        if message and message.command:
+            print(message.command)
+            if message.command[0].startswith('cancel'):
                 is_batch = False
                 del batch_files[msg_id]
-            elif message.text.startswith('/done'):
+            elif message.command[0].startswith('done'):
                 is_batch = False
         batch_files[msg_id].append(message)
         await message.delete()
