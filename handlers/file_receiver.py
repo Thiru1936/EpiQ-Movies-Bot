@@ -5,7 +5,7 @@ from pyrogram.handlers import MessageHandler
 from common import batch_files, is_batch
 from Config import Config
 
-async def temp(_, _):
+async def temp(_, __):
     pass
 
 async def receive_files(client, message):
