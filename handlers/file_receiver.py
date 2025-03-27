@@ -3,7 +3,7 @@ from pyrogram.filters import create, chat
 from pyrogram.handlers import MessageHandler
 
 from common import batch_files, is_batch
-from Config import Config
+from configs import Config
 
 async def temp(_, __):
     pass
