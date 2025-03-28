@@ -238,7 +238,7 @@ async def sts(_, m: Message):
 
 async def copy_message(msg):
     try:
-        return await msg.copy(Config.LOG_CHANNEL)
+        return await msg.copy(Config.DB_CHANNEL)
     except FloodWait as sl:
         await asyncio.sleep(sl.value)
         return await copy_message(msg)
@@ -246,8 +246,9 @@ async def copy_message(msg):
 @Bot.on_message(filters.command("batch") & filters.private & filters.user(Config.BOT_OWNER))
 @new_task
 async def batch_files(client, m: Message):
-    await m.reply("Now Start send files\n\nuse /cancel or /done")
+    t = await m.reply("Now Start send files\n\nuse /cancel or /done")
     messages = await receive_files(client, m)
+    await t.delete()
     if not messages:
         return
     start_msg = end_msg = temp = None
