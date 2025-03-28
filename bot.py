@@ -261,7 +261,7 @@ async def batch_files(client, m: Message):
     end_msg = temp.id
     files_id = f"batch-{str_to_b64(f'{start_msg}-{end_msg}')}"
     share_link = f"https://t.me/{Config.BOT_USERNAME}?start={files_id}"
-    await m.reply(f"Here is ur link : {share_link}")
+    await m.reply(f"Here is ur link : {share_link}\n\n<code>{get_short(share_link)}</code>")
 
 
 
