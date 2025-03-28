@@ -250,7 +250,7 @@ async def batch_files(client, m: Message):
     messages = await receive_files(client, m)
     if not messages:
         return
-    start_msg, end_msg, temp = None
+    start_msg = end_msg = temp = None
     is_start_msg = True
     for message in messages:
         temp = await copy_message(message)
