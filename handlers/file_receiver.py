@@ -24,6 +24,7 @@ async def receive_files(client, message):
                 return None
             elif text.startswith('/done'):
                 is_batch = False
+                return
 
         batch_files[msg_id].append(msg)
         await msg.delete()
