@@ -19,7 +19,9 @@ async def receive_files(client, message):
             if text.startswith('/cancel'):
                 is_batch = False
                 batch_files.pop(msg_id, None)
-                return
+                await message.delete()
+                await msg.reply("Cancelled")
+                return None
             elif text.startswith('/done'):
                 is_batch = False
 
