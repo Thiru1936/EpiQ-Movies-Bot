@@ -36,6 +36,7 @@ from handlers.force_sub_handler import (
 from handlers.broadcast_handlers import main_broadcast_handler
 from handlers.save_media import (get_short)
 from handlers.file_receiver import receive_files
+from handlers.send_file import delete_after_delay
 
 MediaList = {}
 batch = False
@@ -64,13 +65,6 @@ Bot = Client(
 @Bot.on_message(filters.private)
 async def _(bot: Client, cmd: Message):
     await handle_user_status(bot, cmd)
-
-async def copy_message_to_user(client, chat_id, message_id):
-    try:
-        await client.copy_message(chat_id=chat_id, from_chat_id=Config.DB_CHANNEL, message_id=message_id)
-    except FloodWait as sl:
-        await asyncio.sleep(sl.value)
-        return await copy_message_to_user(client, chat_id, message_id)
 
 @Bot.on_message(filters.command("start") & filters.private)
 async def start(bot: Client, cmd: Message):
@@ -106,7 +100,7 @@ async def start(bot: Client, cmd: Message):
         _, files_id = cmd.command[1].split('-', 1)
         start_msg, end_msg = b64_to_str(files_id).split('-', 1)
         for i in range(int(start_msg), int(end_msg)+1):
-            await copy_message_to_user(bot, chat_id=cmd.from_user.id, message_id=i)
+            await send_media_and_reply(bot, chat_id=cmd.from_user.id, message_id=i)
         return
 
     else:
