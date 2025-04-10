@@ -100,7 +100,7 @@ async def start(bot: Client, cmd: Message):
         _, files_id = cmd.command[1].split('-', 1)
         start_msg, end_msg = b64_to_str(files_id).split('-', 1)
         for i in range(int(start_msg), int(end_msg)+1):
-            await send_media_and_reply(bot, chat_id=cmd.from_user.id, message_id=i)
+            await send_media_and_reply(bot, user_id=cmd.from_user.id, file_id=i)
         return
 
     else:
