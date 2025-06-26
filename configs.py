@@ -4,7 +4,7 @@ class Config(object):
   API_ID = int(os.environ.get("API_ID", "23060811"))
   API_HASH = os.environ.get("API_HASH", "6845600d24b8760ab0c23a352e893222")
   BOT_TOKEN = os.environ.get("BOT_TOKEN", " 7264516826:AAFVr9DTouZPRHAgHZrnAN1MZY1-jTxaN90")
-  BOT_USERNAME = os.environ.get("BOT_USERNAME", "@Epiq_movies_bot")
+  BOT_USERNAME = os.environ.get("BOT_USERNAME", "Epiq_movies_bot")
   DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1001785733558"))
   SHORTLINK_URL = os.environ.get('SHORTLINK_URL', "dashboard.gyanilinks.com")
   SHORTLINK_API = os.environ.get('SHORTLINK_API', "74144fdbaa5e91fc2f1f85868df0d43f1fa1daa2")
