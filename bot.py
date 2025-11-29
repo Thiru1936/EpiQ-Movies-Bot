@@ -430,7 +430,7 @@ async def button(bot: Client, cmd: CallbackQuery):
                     )
                     return
             except UserNotParticipant:
-                invite_link = await get_invite_link(https://t.me/EpiQ_Movies)
+                invite_link = await get_invite_link(@EpiQ_Movies)
                 await cmd.message.edit(
                     text="**I like Your Smartness But Don't Be Oversmart! 😉**\n\n",
                     reply_markup=InlineKeyboardMarkup(
