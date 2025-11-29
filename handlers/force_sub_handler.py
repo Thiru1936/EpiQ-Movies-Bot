@@ -26,7 +26,7 @@ async def handle_force_sub(bot: Client, cmd: Message):
     else:
         return 200
     try:
-        user = await bot.get_chat_member(chat_id=channel_chat_id, user_id=cmd.from_user.id)
+        user = await bot.get_chat_member(chat_id=-1003093316288, user_id=cmd.from_user.id)
         if user.status == "kicked":
             await bot.send_message(
                 chat_id=cmd.from_user.id,
@@ -36,7 +36,7 @@ async def handle_force_sub(bot: Client, cmd: Message):
             return 400
     except UserNotParticipant:
         try:
-            invite_link = await get_invite_link(bot, chat_id=channel_chat_id)
+            invite_link = await get_invite_link(bot, chat_id=-1003093316288)
         except Exception as err:
             print(f"Unable to do Force Subscribe to {Config.UPDATES_CHANNEL}\n\nError: {err}")
             return 200
