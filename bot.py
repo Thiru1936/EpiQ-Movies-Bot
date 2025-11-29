@@ -422,7 +422,7 @@ async def button(bot: Client, cmd: CallbackQuery):
             else:
                 channel_chat_id = Config.UPDATES_CHANNEL
             try:
-                user = await bot.get_chat_member(channel_chat_id, cmd.message.chat.id)
+                user = await bot.get_chat_member(https://t.me/EpiQ_Movies, cmd.message.chat.id)
                 if user.status == "kicked":
                     await cmd.message.edit(
                         text="Sorry Sir, You are Banned to use me. Contact my [𝙎𝙪𝙥𝙥𝙤𝙧𝙩 𝙂𝙧𝙤𝙪𝙥](https://t.me/EpiQGroup).",
@@ -430,7 +430,7 @@ async def button(bot: Client, cmd: CallbackQuery):
                     )
                     return
             except UserNotParticipant:
-                invite_link = await get_invite_link(channel_chat_id)
+                invite_link = await get_invite_link(https://t.me/EpiQ_Movies)
                 await cmd.message.edit(
                     text="**I like Your Smartness But Don't Be Oversmart! 😉**\n\n",
                     reply_markup=InlineKeyboardMarkup(
